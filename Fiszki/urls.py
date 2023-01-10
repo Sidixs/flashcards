@@ -1,11 +1,12 @@
 from django.urls import path
-from . import views
 
+from Fiszki import views
 
 urlpatterns =[
     path('', views.view_home.home, name='home'),
     path('home', views.view_home.home, name='home'),
     path('signup', views.view_registration.sign_up, name='signup'),
+    path('flashcard/<str:zestFiszId>', views.view_flashcard.flashcard, name='flashcard'),
     # path('create-post', views.view_post.create_post, name='create-post'),
     # path('tos', views.view_site_misc.TOS_page, name='tos'),
     # path('profile/<str:userid>', views.view_user.profile, name='profile'),
