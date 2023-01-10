@@ -4,9 +4,9 @@ from django.shortcuts import render
 from Fiszki.models import SetOfFlashcards, Flashcards
 
 
-def flashcard(request, zestFiszId):
-    setOfFlashcards = SetOfFlashcards.objects.get(id = zestFiszId)
-    flashcards_list = Flashcards.objects.filter(set_of_flashcards=zestFiszId)
+def flashcard(request, SOFId):
+    setOfFlashcards = SetOfFlashcards.objects.get(id = SOFId)
+    flashcards_list = Flashcards.objects.filter(set_of_flashcards=SOFId)
     page = request.GET.get('page', 1)
     paginator = Paginator(flashcards_list, 1)
     try:

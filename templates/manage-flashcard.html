@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Fiszka {{ setOfFlashcards.name }}{% endblock %}
+{% block content %}
+<div class="container mt-auto">
+	{% for flashcard in flashcards %}
+	<div class="card mt-2">
+		<div class="card-header d-flex flex-row justify-content-between">
+{#            Tutaj fajnie jakby była animacja obracania, tak aby druga strona była widoczna p kliknięciu#}
+            <div>{{ flashcard.first }}</div>
+            <div>{{ flashcard.second }}</div>
+            <form method="POST" onsubmit="return confirm('Czy na pewno?')">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger position-top-right-corner" name="delete-card-id" value="{{flashcard.id}}">Usuń</button>
+            </form>
+        </div>
+	</div>
+	{% empty %}
+	<p>Pusto</p>
+	{% endfor %}
+</div>
+{% endblock %}

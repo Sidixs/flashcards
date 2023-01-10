@@ -6,13 +6,12 @@
 	<div class="card mt-2">
 		<div class="card-body d-flex flex-row justify-content-between">
 			<div class="post-preview-container">
-        <a href="{% url 'flashcard' card.id %}">
+        <a href="{% url 'manage-flashcard' card.id %}">
           <div>
             <h5 class="card-title" >{{card.name}}</h5>
-            <form method="POST">
+            <form method="POST" onsubmit="return confirm('Czy na pewno?')">
                 {% csrf_token %}
-                <button type="submit" class="btn btn-primary" name="edit-card-id" value="{{card.id}}">Edytuj</button>
-                <button type="submit" class="btn btn-danger" name="delete-card-id" value="{{card.id}}" onclick="return confirm('Czy na pewno?')">Usuń</button>
+                <button type="submit" class="btn btn-danger position-top-right-corner" name="delete-card-set-id" value="{{card.id}}">Usuń</button>
             </form>
           </div>
         </a>
