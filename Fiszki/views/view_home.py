@@ -4,5 +4,5 @@ from Fiszki.models import SetOfFlashcards
 
 
 def home(request):
-    zestawyFiszek = SetOfFlashcards.objects.all()
-    return render(request, 'home.html', {'zestawyFiszek':zestawyFiszek})
+    SetOfCards = SetOfFlashcards.objects.all()
+    return render(request, 'home.html', {'SetOfCards':SetOfCards})

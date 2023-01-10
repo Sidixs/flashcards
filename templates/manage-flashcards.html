@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}Strona Główna{% endblock %}
 {% block content %}
+    {% if user.is_superuser %}
     {% for card in SetOfCards %}
 	<div class="card mt-2">
 		<div class="card-body d-flex flex-row justify-content-between">
@@ -8,6 +9,11 @@
         <a href="{% url 'flashcard' card.id %}">
           <div>
             <h5 class="card-title" >{{card.name}}</h5>
+            <form method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary" name="edit-card-id" value="{{card.id}}">Edytuj</button>
+                <button type="submit" class="btn btn-danger" name="delete-card-id" value="{{card.id}}" onclick="return confirm('Czy na pewno?')">Usuń</button>
+            </form>
           </div>
         </a>
 
@@ -17,4 +23,7 @@
 	{% empty %}
 	<p>Brak fiszek</p>
 	{% endfor %}
+    {% else %}
+    Brak uprawnień
+    {% endif %}
 {% endblock %}
