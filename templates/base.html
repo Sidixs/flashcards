@@ -128,19 +128,21 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/home">Strona główna</a>
                     </li>
-                    {% if user.is_superuser %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="/create-post">Nowy Post</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/followers">Obserwowani</a>
-                    </li>
-                    {% endif %}
                 </ul>
             </div>
             <div>
+
                 <ul class="navbar-nav">
                     {% if user.is_authenticated %}
+                        {% if user.is_superuser %}
+{#                            Sekcja administratorów#}
+                        <li class="nav-item" style="background-color: blueviolet">
+                            <a class="nav-link" href="/manage-flashcards">Fiszki</a>
+                        </li>
+                        <li class="nav-item" style="background-color: blueviolet">
+                            <a class="nav-link" href="/users">Użytkownicy</a>
+                        </li>
+                        {% endif %}
                     <a class="nav-link">Zalogowano jako {{user.username}}</a>
                     <span class="navbar-text"> | </span>
                     <li class="nav-item">
