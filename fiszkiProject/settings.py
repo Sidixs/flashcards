@@ -84,8 +84,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'flashcards_pro',
-        'USER': 'AdminBazy',
-        'PASSWORD': 'ProjektFiszki2023',
+        'USER': 'django_user',
+        'PASSWORD': 'tFqA99JKszcGjrs',
         'HOST': 'fiszkiprojekt.mysql.database.azure.com',
         'PORT': '3306'
     }
