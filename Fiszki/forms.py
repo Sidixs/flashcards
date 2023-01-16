@@ -4,6 +4,9 @@ from django.core.exceptions import ValidationError
 from django.utils.safestring import mark_safe
 from django import forms
 
+from Fiszki.models import SetOfFlashcards, Flashcards
+
+
 class RegisterForm(UserCreationForm):
     username = forms.CharField(label="Nazwa użytkownika", required=True,
                                help_text="Pole wymagane. Do 150 znaków. Tylko litery, cyfry, i znaki @.+-_")
@@ -40,3 +43,13 @@ class RegisterForm(UserCreationForm):
         model = User
         fields = ["username", "email", "email2", "password1", "password2", "tos_accepted"]
 # na ten moment jeszcze 4 ValidationErrory do haseł są dalej po angielsku!
+
+class SetOfFlashcardsForm(forms.ModelForm):
+    class Meta:
+        model = SetOfFlashcards
+        fields = ['name']
+
+class FlashcardsForm(forms.ModelForm):
+    class Meta:
+        model = Flashcards
+        fields = ['first', 'second']

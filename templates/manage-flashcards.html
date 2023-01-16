@@ -1,7 +1,15 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
 {% block title %}Strona Główna{% endblock %}
 {% block content %}
     {% if user.is_superuser %}
+    <form method="post">
+        {% csrf_token %}
+        {{SetOfCardsForm|crispy}}
+        {{SetOfCardsForm.media}}
+        <button type="submit" class="btn btn-success" name="add-card-set">Dodaj</button>
+    </form>
     {% for card in SetOfCards %}
 	<div class="card mt-2">
 		<div class="card-body d-flex flex-row justify-content-between">
