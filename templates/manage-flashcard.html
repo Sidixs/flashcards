@@ -1,7 +1,16 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
 {% block title %}Fiszka {{ setOfFlashcards.name }}{% endblock %}
 {% block content %}
 <div class="container mt-auto">
+    {% if user.is_superuser %}
+    <form method="post">
+        {% csrf_token %}
+        {{cardForm|crispy}}
+        {{cardForm.media}}
+        <button type="submit" class="btn btn-success" name="add-card">Dodaj</button>
+    </form>
 	{% for flashcard in flashcards %}
 	<div class="card mt-2">
 		<div class="card-header d-flex flex-row justify-content-between">
@@ -18,4 +27,5 @@
 	<p>Pusto</p>
 	{% endfor %}
 </div>
+    {% endif %}
 {% endblock %}
