@@ -27,9 +27,11 @@ def flashcardDetails(request, SOFId):
     # print("ASD"+SOFId)
     cardForm = FlashcardsForm()
     setOfFlashcards = SetOfFlashcards.objects.get(id=SOFId)
+    setOfFlashcardsForm = SetOfFlashcardsForm()
+    setOfFlashcardsForm.fields['name'].initial = setOfFlashcards.name
     # print(setOfFlashcards.name)
     flashcards = Flashcards.objects.filter(set_of_flashcards=SOFId)
-    context = {'setOfFlashcards': setOfFlashcards, 'flashcards': flashcards,'cardForm':cardForm}
+    context = {'setOfFlashcards': setOfFlashcards, 'flashcards': flashcards,'cardForm':cardForm,'setOfFlashcardsForm':setOfFlashcardsForm}
     if request.method == "POST":
         # a = Flashcards(set_of_flashcards_id=SOFId,first="fsdafdvcxzvcxz",second="adsafdsafds")
         # a.save()
@@ -40,12 +42,16 @@ def flashcardDetails(request, SOFId):
                 card.set_of_flashcards_id = SOFId
                 card.save()
                 return redirect('manage-flashcard', SOFId=SOFId)
-
         if 'delete-card-id' in request.POST:
             cardId = request.POST.get('delete-card-id')
             card = Flashcards.objects.filter(id = cardId).first()
             if card and request.user.is_superuser:
                 card.delete()
+                return redirect('manage-flashcard', SOFId=SOFId)
+        if 'edit-card-set-name' in request.POST:
+            cardSetForm = SetOfFlashcardsForm(request.POST)
+            if cardSetForm.is_valid() and request.user.is_superuser:
+                SetOfFlashcards.objects.filter(id=SOFId).update(name=cardSetForm.cleaned_data['name'])
                 return redirect('manage-flashcard', SOFId=SOFId)
     return render(request, 'manage-flashcard.html', context)
 
@@ -54,12 +60,7 @@ def flashcardEdit(request, SOFId, cardId):
         if 'edit-card' in request.POST:
             cardForm = FlashcardsForm(request.POST)
             if cardForm.is_valid():
-                # print(cardForm.cleaned_data['second'])
-                # card = Flashcards.objects.filter(id=cardId).first()#.update(first=cardForm.cleaned_data['first'], second=cardForm.cleaned_data['second'])
-                # print(card.first)
                 Flashcards.objects.filter(id=cardId).update(first=cardForm.cleaned_data['first'], second=cardForm.cleaned_data['second'])
-                # card.update(first=cardForm.cleaned_data['first'])
-                # card.save()
                 return redirect('manage-flashcard', SOFId=SOFId)
 
     cardForm = FlashcardsForm()

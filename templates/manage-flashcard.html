@@ -7,6 +7,12 @@
     {% if user.is_superuser %}
     <form method="post">
         {% csrf_token %}
+        {{setOfFlashcardsForm|crispy}}
+        {{setOfFlashcardsForm.media}}
+        <button type="submit" class="btn btn-success" name="edit-card-set-name">Edytuj</button>
+    </form>
+    <form method="post">
+        {% csrf_token %}
         {{cardForm|crispy}}
         {{cardForm.media}}
         <button type="submit" class="btn btn-success" name="add-card">Dodaj</button>
