@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
+{% block title %}Fiszka {{ setOfFlashcards.name }}{% endblock %}
+{% block content %}
+<div class="container mt-auto">
+    {% if user.is_superuser %}
+    <form method="post">
+        {% csrf_token %}
+        {{cardForm|crispy}}
+        {{cardForm.media}}
+        <button type="submit" class="btn btn-success" name="edit-card">Edytuj</button>
+    </form>
+</div>
+    {% endif %}
+{% endblock %}

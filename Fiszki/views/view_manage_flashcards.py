@@ -18,6 +18,7 @@ def setsOfFlashcards(request):
             cardSetId =request.POST.get("delete-card-set-id")
             cardSet = SetOfFlashcards.objects.filter(id = cardSetId).first()
             if cardSet and request.user.is_superuser:
+                Flashcards.objects.filter(set_of_flashcards_id=cardSetId).delete()
                 cardSet.delete()
                 return redirect('manage-flashcards')
     return render(request, 'manage-flashcards.html', {'SetOfCards':SetOfCards,'SetOfCardsForm':SetOfCardsForm})
@@ -26,6 +27,7 @@ def flashcardDetails(request, SOFId):
     # print("ASD"+SOFId)
     cardForm = FlashcardsForm()
     setOfFlashcards = SetOfFlashcards.objects.get(id=SOFId)
+    # print(setOfFlashcards.name)
     flashcards = Flashcards.objects.filter(set_of_flashcards=SOFId)
     context = {'setOfFlashcards': setOfFlashcards, 'flashcards': flashcards,'cardForm':cardForm}
     if request.method == "POST":
@@ -46,3 +48,25 @@ def flashcardDetails(request, SOFId):
                 card.delete()
                 return redirect('manage-flashcard', SOFId=SOFId)
     return render(request, 'manage-flashcard.html', context)
+
+def flashcardEdit(request, SOFId, cardId):
+    if request.method == "POST":
+        if 'edit-card' in request.POST:
+            cardForm = FlashcardsForm(request.POST)
+            if cardForm.is_valid():
+                # print(cardForm.cleaned_data['second'])
+                # card = Flashcards.objects.filter(id=cardId).first()#.update(first=cardForm.cleaned_data['first'], second=cardForm.cleaned_data['second'])
+                # print(card.first)
+                Flashcards.objects.filter(id=cardId).update(first=cardForm.cleaned_data['first'], second=cardForm.cleaned_data['second'])
+                # card.update(first=cardForm.cleaned_data['first'])
+                # card.save()
+                return redirect('manage-flashcard', SOFId=SOFId)
+
+    cardForm = FlashcardsForm()
+    setOfFlashcards = SetOfFlashcards.objects.get(id=SOFId)
+    card = Flashcards.objects.filter(id=cardId).first()
+    context = {'setOfFlashcards': setOfFlashcards, 'cardForm': cardForm}
+
+    cardForm.fields['first'].initial = card.first
+    cardForm.fields['second'].initial = card.second
+    return render(request, 'edit-flashcard.html', context)

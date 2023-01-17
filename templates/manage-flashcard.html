@@ -13,8 +13,9 @@
     </form>
 	{% for flashcard in flashcards %}
 	<div class="card mt-2">
+    <a href="{% url 'edit-flashcard' setOfFlashcards.id flashcard.id %}">
 		<div class="card-header d-flex flex-row justify-content-between">
-{#            Tutaj fajnie jakby była animacja obracania, tak aby druga strona była widoczna p kliknięciu#}
+
             <div>{{ flashcard.first }}</div>
             <div>{{ flashcard.second }}</div>
             <form method="POST" onsubmit="return confirm('Czy na pewno?')">
@@ -22,6 +23,7 @@
                 <button type="submit" class="btn btn-danger position-top-right-corner" name="delete-card-id" value="{{flashcard.id}}">Usuń</button>
             </form>
         </div>
+    </a>
 	</div>
 	{% empty %}
 	<p>Pusto</p>
