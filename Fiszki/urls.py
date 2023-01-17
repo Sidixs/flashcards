@@ -9,6 +9,7 @@ urlpatterns =[
     path('flashcard/<str:SOFId>', views.view_flashcard.flashcard, name='flashcard'),
     path('manage-flashcards', views.view_manage_flashcards.setsOfFlashcards, name='manage-flashcards'),
     path('manage-flashcard/<str:SOFId>', views.view_manage_flashcards.flashcardDetails, name='manage-flashcard'),
+    path('manage-flashcard/<str:SOFId>/<str:cardId>', views.view_manage_flashcards.flashcardEdit, name='edit-flashcard'),
     path('tos', views.view_site_tos.TOS_page, name='tos'),
     # path('profile/<str:userid>', views.view_user.profile, name='profile'),
     # path('followers', views.view_follower.followers_page, name='followers'),

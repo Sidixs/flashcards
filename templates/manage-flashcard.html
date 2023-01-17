@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{#/manage-flashcard/<str:SOFId>#}
 {% load crispy_forms_tags %}
 {% load crispy_forms_filters %}
 {% block title %}Fiszka {{ setOfFlashcards.name }}{% endblock %}
@@ -7,14 +8,21 @@
     {% if user.is_superuser %}
     <form method="post">
         {% csrf_token %}
+        {{setOfFlashcardsForm|crispy}}
+        {{setOfFlashcardsForm.media}}
+        <button type="submit" class="btn btn-success" name="edit-card-set-name">Edytuj</button>
+    </form>
+    <form method="post">
+        {% csrf_token %}
         {{cardForm|crispy}}
         {{cardForm.media}}
         <button type="submit" class="btn btn-success" name="add-card">Dodaj</button>
     </form>
 	{% for flashcard in flashcards %}
 	<div class="card mt-2">
+    <a href="{% url 'edit-flashcard' setOfFlashcards.id flashcard.id %}">
 		<div class="card-header d-flex flex-row justify-content-between">
-{#            Tutaj fajnie jakby była animacja obracania, tak aby druga strona była widoczna p kliknięciu#}
+
             <div>{{ flashcard.first }}</div>
             <div>{{ flashcard.second }}</div>
             <form method="POST" onsubmit="return confirm('Czy na pewno?')">
@@ -22,10 +30,14 @@
                 <button type="submit" class="btn btn-danger position-top-right-corner" name="delete-card-id" value="{{flashcard.id}}">Usuń</button>
             </form>
         </div>
+    </a>
 	</div>
 	{% empty %}
 	<p>Pusto</p>
 	{% endfor %}
-</div>
+
+        {% else %}
+    Brak uprawnień
     {% endif %}
+</div>
 {% endblock %}
