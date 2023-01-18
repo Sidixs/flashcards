@@ -5,8 +5,6 @@ from Fiszki.models import SetOfFlashcards, Flashcards
 
 
 def setsOfFlashcards(request):
-    SetOfCards = SetOfFlashcards.objects.all()
-    SetOfCardsForm = SetOfFlashcardsForm()
     if request.method == "POST":
         if 'add-card-set' in request.POST:
             SetOfCardsForm = SetOfFlashcardsForm(request.POST)
@@ -21,20 +19,12 @@ def setsOfFlashcards(request):
                 Flashcards.objects.filter(set_of_flashcards_id=cardSetId).delete()
                 cardSet.delete()
                 return redirect('manage-flashcards')
+    SetOfCards = SetOfFlashcards.objects.all()
+    SetOfCardsForm = SetOfFlashcardsForm()
     return render(request, 'manage-flashcards.html', {'SetOfCards':SetOfCards,'SetOfCardsForm':SetOfCardsForm})
 
 def flashcardDetails(request, SOFId):
-    # print("ASD"+SOFId)
-    cardForm = FlashcardsForm()
-    setOfFlashcards = SetOfFlashcards.objects.get(id=SOFId)
-    setOfFlashcardsForm = SetOfFlashcardsForm()
-    setOfFlashcardsForm.fields['name'].initial = setOfFlashcards.name
-    # print(setOfFlashcards.name)
-    flashcards = Flashcards.objects.filter(set_of_flashcards=SOFId)
-    context = {'setOfFlashcards': setOfFlashcards, 'flashcards': flashcards,'cardForm':cardForm,'setOfFlashcardsForm':setOfFlashcardsForm}
     if request.method == "POST":
-        # a = Flashcards(set_of_flashcards_id=SOFId,first="fsdafdvcxzvcxz",second="adsafdsafds")
-        # a.save()
         if 'add-card' in request.POST:
             cardForm = FlashcardsForm(request.POST)
             if cardForm.is_valid():
@@ -53,6 +43,13 @@ def flashcardDetails(request, SOFId):
             if cardSetForm.is_valid() and request.user.is_superuser:
                 SetOfFlashcards.objects.filter(id=SOFId).update(name=cardSetForm.cleaned_data['name'])
                 return redirect('manage-flashcard', SOFId=SOFId)
+    cardForm = FlashcardsForm()
+    setOfFlashcards = SetOfFlashcards.objects.get(id=SOFId)
+    setOfFlashcardsForm = SetOfFlashcardsForm()
+    setOfFlashcardsForm.fields['name'].initial = setOfFlashcards.name
+    flashcards = Flashcards.objects.filter(set_of_flashcards=SOFId)
+    context = {'setOfFlashcards': setOfFlashcards, 'flashcards': flashcards, 'cardForm': cardForm,
+               'setOfFlashcardsForm': setOfFlashcardsForm}
     return render(request, 'manage-flashcard.html', context)
 
 def flashcardEdit(request, SOFId, cardId):
@@ -67,7 +64,6 @@ def flashcardEdit(request, SOFId, cardId):
     setOfFlashcards = SetOfFlashcards.objects.get(id=SOFId)
     card = Flashcards.objects.filter(id=cardId).first()
     context = {'setOfFlashcards': setOfFlashcards, 'cardForm': cardForm}
-
     cardForm.fields['first'].initial = card.first
     cardForm.fields['second'].initial = card.second
     return render(request, 'edit-flashcard.html', context)
