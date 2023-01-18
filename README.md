@@ -1,2 +1,6 @@
-
- 
+W przypadku braku zainstalowanego django trzeba zainstalować:
+1.pip install django
+2.pip install install crispy-bootstrap5
+3.pip install psycopg2      // nie wiem czy to jest wymagane
+4.pip install pymysql       // nie wiem czy to jest wymagane
+5.pip install mysqlclient   // nie wiem czy to jest wymagane

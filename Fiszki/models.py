@@ -117,17 +117,18 @@ class DjangoSession(models.Model):
 
 class Flashcards(models.Model):
     set_of_flashcards = models.ForeignKey('SetOfFlashcards', models.DO_NOTHING)
-    first = models.TextField(blank=True, null=True)
-    second = models.TextField(blank=True, null=True)
-
+    # first = models.TextField(blank=True, null=True)
+    # second = models.TextField(blank=True, null=True)
+    first = models.TextField(blank=False, null=True)
+    second = models.TextField(blank=False, null=True)
     class Meta:
         managed = False
         db_table = 'flashcards'
 
 
 class SetOfFlashcards(models.Model):
-    name = models.CharField(max_length=45, blank=True, null=True)
-
+    # name = models.CharField(max_length=45, blank=True, null=True)
+    name = models.CharField(max_length=45, blank=False, null=True)
     class Meta:
         managed = False
         db_table = 'set_of_flashcards'
