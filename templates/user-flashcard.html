@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{#/user-flashcard/<str:SOUFId>#}
+{% block title %}Fiszka {{ setOfUserFlashcards.name }}{% endblock %}
+{% block content %}
+<div class="container mt-auto">
+	{% for flashcard in flashcards %}
+	<div class="card mt-2">
+		<div class="card-header d-flex flex-row justify-content-between">
+{#            Tutaj fajnie jakby była animacja obracania, tak aby druga strona była widoczna p kliknięciu#}
+            <div>{{ flashcard.first }}</div>
+            <div>{{ flashcard.second }}</div>
+        </div>
+	</div>
+	{% empty %}
+	<p>Pusto</p>
+	{% endfor %}
+</div>
+    {% if flashcards.has_other_pages %}
+        <nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+    {% if flashcards.has_previous %}
+      <li class="page-item"><a class="page-link" href="?page={{ flashcards.previous_page_number }}">Poprzednia</a></li>
+    {% else %}
+      <li class="page-item disabled"><a class="page-link" href="">Poprzednia</a></li>
+    {% endif %}
+    {% if flashcards.has_next %}
+      <li class="page-item"><a class="page-link" class="page-link" href="?page={{ flashcards.next_page_number }}">Następna</a></li>
+    {% else %}
+      <li  class="page-item disabled"><a class="page-link" class="page-link" href="">Następna</a></li>
+    {% endif %}
+  </ul>
+        </nav>
+{% endif %}
+{% endblock %}

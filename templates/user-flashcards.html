@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{#/user-flashcards#}
+{% block title %}Fiszki użytkowników{% endblock %}
+{% block content %}
+    {% for card in SetOfUserCards %}
+	<div class="card mt-2">
+		<div class="card-body d-flex flex-row justify-content-between">
+			<div class="post-preview-container">
+        <a href="{% url 'user-flashcard' card.id %}">
+          <div>
+            <h5 class="card-title" >{{card.name}}</h5>
+          </div>
+        </a>
+
+	</div>
+        </div>
+    </div>
+	{% empty %}
+	<p>Brak fiszek</p>
+	{% endfor %}
+{% endblock %}

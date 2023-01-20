@@ -5,9 +5,11 @@ from Fiszki import views
 urlpatterns =[
     path('', views.view_home.home, name='home'),
     path('home', views.view_home.home, name='home'),
-    path('signup', views.view_registration.sign_up, name='signup'),
 
     path('flashcard/<str:SOFId>', views.view_home.flashcard, name='flashcard'),
+
+    path('user-flashcards', views.view_user_flashcards.userFlashcards, name='user-flashcards'),
+    path('user-flashcard/<str:SOUFId>', views.view_user_flashcards.userFlashcard, name='user-flashcard'),
 
     path('manage-flashcards', views.view_manage_flashcards.setsOfFlashcards, name='manage-flashcards'),
     path('manage-flashcard/<str:SOFId>', views.view_manage_flashcards.flashcardDetails, name='manage-flashcard'),
@@ -16,6 +18,8 @@ urlpatterns =[
     path('user-manage-flashcards', views.view_user_manage_flashcards.setsOfUserFlashcards, name='user-manage-flashcards'),
     path('user-manage-flashcard/<str:SOUFId>', views.view_user_manage_flashcards.userFlashcardDetails, name='user-manage-flashcard'),
     path('user-manage-flashcard/<str:SOUFId>/<str:cardId>', views.view_user_manage_flashcards.userFlashcardEdit, name='user-edit-flashcard'),
+
+    path('signup', views.view_registration.sign_up, name='signup'),
 
     path('tos', views.view_site_tos.TOS_page, name='tos'),
     # path('profile/<str:userid>', views.view_user.profile, name='profile'),
