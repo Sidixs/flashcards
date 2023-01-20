@@ -11,6 +11,8 @@ urlpatterns =[
     path('user-flashcards', views.view_user_flashcards.userFlashcards, name='user-flashcards'),
     path('user-flashcard/<str:SOUFId>', views.view_user_flashcards.userFlashcard, name='user-flashcard'),
 
+    path('user-favorites', views.view_user_favorites.userFavorites, name='user-favorites'),
+
     path('manage-flashcards', views.view_manage_flashcards.setsOfFlashcards, name='manage-flashcards'),
     path('manage-flashcard/<str:SOFId>', views.view_manage_flashcards.flashcardDetails, name='manage-flashcard'),
     path('manage-flashcard/<str:SOFId>/<str:cardId>', views.view_manage_flashcards.flashcardEdit, name='edit-flashcard'),

@@ -11,6 +11,7 @@
             <div>{{ flashcard.second }}</div>
         </div>
 	</div>
+
 	{% empty %}
 	<p>Pusto</p>
 	{% endfor %}
@@ -31,4 +32,15 @@
   </ul>
         </nav>
 {% endif %}
+    {% if isFavorite == True %}
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger" name="delete-from-favorite">Usuń z ulubionych</button>
+        </form>
+    {% else %}
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success" name="add-to-favorite">Dodaj do ulubionych</button>
+        </form>
+    {% endif %}
 {% endblock %}
