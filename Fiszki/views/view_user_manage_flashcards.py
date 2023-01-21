@@ -1,15 +1,22 @@
 from django.shortcuts import redirect, render
+from datetime import datetime
+
+from django.utils import timezone
 
 from Fiszki.forms import SetOfUserFlashcardsForm, UserFlashcardsForm
-from Fiszki.models import UserFlashcards, SetOfUserFlashcards
+from Fiszki.models import UserFlashcards, SetOfUserFlashcards, Ban
 
 
 def setsOfUserFlashcards(request):
+    if request.user.is_authenticated and Ban.objects.filter(auth_user=request.user.id).exists():
+        banTime = Ban.objects.filter(auth_user=request.user.id).values_list('ban_to', flat=True)[0]
+        if banTime > timezone.now():
+            return redirect('ban-info')
+
     if request.method == "POST":
         if 'add-card-set' in request.POST:
             SetOfCardsForm = SetOfUserFlashcardsForm(request.POST)
             if SetOfCardsForm.is_valid():
-                #SetOfCardsForm.auth_user_id = request.user.id
                 Set = SetOfCardsForm.save(commit=False)
                 Set.auth_user_id = request.user.id
                 Set.save()
@@ -17,20 +24,20 @@ def setsOfUserFlashcards(request):
 
         if 'delete-card-set-id' in request.POST:
             cardSetId =request.POST.get("delete-card-set-id")
-            # print(cardSetId)
             cardSet = SetOfUserFlashcards.objects.filter(id = cardSetId).first()
-            # print(cardSet.id)
-            # print(request.user.is_authenticated)
             if cardSet and request.user.is_authenticated and cardSet.auth_user_id == request.user.id:
                 UserFlashcards.objects.filter(set_of_user_flashcards=cardSetId).delete()
                 cardSet.delete()
                 return redirect('user-manage-flashcards')
     SetOfCards = SetOfUserFlashcards.objects.filter(auth_user_id=request.user.id)
-    #print(SetOfCards)
     SetOfCardsForm = SetOfUserFlashcardsForm()
     return render(request, 'user-manage-flashcards.html', {'SetOfCards':SetOfCards,'SetOfCardsForm':SetOfCardsForm})
 
 def userFlashcardDetails(request, SOUFId):
+    if request.user.is_authenticated and Ban.objects.filter(auth_user=request.user.id).exists():
+        banTime = Ban.objects.filter(auth_user=request.user.id).values_list('ban_to', flat=True)[0]
+        if banTime > timezone.now():
+            return redirect('ban-info')
     if request.method == "POST":
         if 'add-card' in request.POST:
             cardForm = UserFlashcardsForm(request.POST)
@@ -62,6 +69,10 @@ def userFlashcardDetails(request, SOUFId):
     return render(request, 'user-manage-flashcard.html', context)
 
 def userFlashcardEdit(request, SOUFId, cardId):
+    if request.user.is_authenticated and Ban.objects.filter(auth_user=request.user.id).exists():
+        banTime = Ban.objects.filter(auth_user=request.user.id).values_list('ban_to', flat=True)[0]
+        if banTime > timezone.now():
+            return redirect('ban-info')
     if request.method == "POST":
         if 'edit-card' in request.POST:
             cardForm = UserFlashcardsForm(request.POST)

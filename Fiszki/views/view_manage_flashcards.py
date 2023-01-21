@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, redirect
 
 from Fiszki.forms import SetOfFlashcardsForm, FlashcardsForm
@@ -19,7 +20,15 @@ def setsOfFlashcards(request):
                 Flashcards.objects.filter(set_of_flashcards_id=cardSetId).delete()
                 cardSet.delete()
                 return redirect('manage-flashcards')
-    SetOfCards = SetOfFlashcards.objects.all()
+    SetOfCardsList = SetOfFlashcards.objects.all()
+    page = request.GET.get('page', 1)
+    paginator = Paginator(SetOfCardsList, 5)
+    try:
+        SetOfCards = paginator.page(page)
+    except PageNotAnInteger:
+        SetOfCards = paginator.page(1)
+    except EmptyPage:
+        SetOfCards = paginator.page(paginator.num_pages)
     SetOfCardsForm = SetOfFlashcardsForm()
     return render(request, 'manage-flashcards.html', {'SetOfCards':SetOfCards,'SetOfCardsForm':SetOfCardsForm})
 

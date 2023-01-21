@@ -13,9 +13,15 @@ urlpatterns =[
 
     path('user-favorites', views.view_user_favorites.userFavorites, name='user-favorites'),
 
+    path('manage-users', views.view_manage_users.manageUsers, name='manage-users'),
+    path('ban-info', views.view_manage_users.banInfo, name='ban-info'),
+
     path('manage-flashcards', views.view_manage_flashcards.setsOfFlashcards, name='manage-flashcards'),
     path('manage-flashcard/<str:SOFId>', views.view_manage_flashcards.flashcardDetails, name='manage-flashcard'),
     path('manage-flashcard/<str:SOFId>/<str:cardId>', views.view_manage_flashcards.flashcardEdit, name='edit-flashcard'),
+
+    path('manage-user-flashcards', views.view_manage_user_flashcards.manageUserFlashcards, name='manage-user-flashcards'),
+    path('manage-user-flashcards/<str:SOUFId>', views.view_manage_user_flashcards.manageUserFlashcardDetails, name='manage-user-flashcard-details'),
 
     path('user-manage-flashcards', views.view_user_manage_flashcards.setsOfUserFlashcards, name='user-manage-flashcards'),
     path('user-manage-flashcard/<str:SOUFId>', views.view_user_manage_flashcards.userFlashcardDetails, name='user-manage-flashcard'),
@@ -24,8 +30,5 @@ urlpatterns =[
     path('signup', views.view_registration.sign_up, name='signup'),
 
     path('tos', views.view_site_tos.TOS_page, name='tos'),
-    # path('profile/<str:userid>', views.view_user.profile, name='profile'),
-    # path('followers', views.view_follower.followers_page, name='followers'),
-    # path('edit-profile', views.view_user.edit_profile, name='edit-profile'),
-    # path('post/<str:post_id>', views.view_post.post_full, name='post'),
+    path('profile/<int:userId>', views.view_user.profile, name='profile'),
 ]

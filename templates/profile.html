@@ -1,15 +1,30 @@
 {% extends 'base.html' %}
-{#/user-flashcards#}
-{% block title %}Fiszki użytkowników{% endblock %}
+{#/profile/<str:userId>#}
+{% block title %}
+    {% if profile != None %}
+        Profil {{ profile.username }}
+    {% else %}
+        Profil nie istnieje
+    {% endif %}
+{% endblock %}
 {% block content %}
-    {% for card in SetOfUserCards %}
+    {% if profile != None %}
+    <div>
+        Profil użytkownika {{ profile.username }}
+    </div>
+    {% for card in setOfProfileFlashcards %}
 	<div class="card mt-2">
 		<div class="card-body d-flex flex-row justify-content-between">
 			<div class="post-preview-container">
             <a href="{% url 'user-flashcard' card.id %}">
               <div>
                 <h5 class="card-title" >{{card.name}}</h5>
-                    {% if user.is_authenticated %}
+                  {% if profile.id == request.user.id %}
+                      {% if card.is_private == True %}
+                          Fiszka prywatna
+                          {% endif %}
+                  {% endif %}
+              {% if user.is_authenticated and profile.id != request.user.id %}
                   {% if card.Favorite == True %}
                       <form method="POST">
                     {% csrf_token %}
@@ -24,7 +39,6 @@
               {% endif %}
               </div>
             </a>
-            <a href="{% url 'profile' card.auth_user.id %}">@{{ card.auth_user.username }}</a>
 	        </div>
 
         </div>
@@ -32,27 +46,31 @@
 	{% empty %}
 	<p>Brak fiszek</p>
 	{% endfor %}
-    {% if SetOfUserCards.has_other_pages %}
+
+    {% if setOfProfileFlashcards.has_other_pages %}
         <nav aria-label="Page navigation example">
   <ul class="pagination justify-content-center">
-    {% if SetOfUserCards.has_previous %}
-      <li class="page-item"><a class="page-link" href="?page={{ SetOfUserCards.previous_page_number }}">Poprzednia</a></li>
+    {% if setOfProfileFlashcards.has_previous %}
+      <li class="page-item"><a class="page-link" href="?page={{ setOfProfileFlashcards.previous_page_number }}">Poprzednia</a></li>
     {% else %}
       <li class="page-item disabled"><a class="page-link" href="">Poprzednia</a></li>
     {% endif %}
-    {% for i in SetOfUserCards.paginator.page_range %}
-      {% if SetOfUserCards.number == i %}
+    {% for i in setOfProfileFlashcards.paginator.page_range %}
+      {% if setOfProfileFlashcards.number == i %}
         <li  class="page-item active"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
       {% else %}
         <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
       {% endif %}
     {% endfor %}
-    {% if SetOfUserCards.has_next %}
-      <li class="page-item"><a class="page-link" class="page-link" href="?page={{ SetOfUserCards.next_page_number }}">Następna</a></li>
+    {% if setOfProfileFlashcards.has_next %}
+      <li class="page-item"><a class="page-link" class="page-link" href="?page={{ setOfProfileFlashcards.next_page_number }}">Następna</a></li>
     {% else %}
       <li  class="page-item disabled"><a class="page-link" class="page-link" href="">Następna</a></li>
     {% endif %}
   </ul>
         </nav>
+    {% endif %}
+    {% else %}
+        Taki profil nie istnieje
     {% endif %}
 {% endblock %}

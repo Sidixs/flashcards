@@ -11,11 +11,38 @@
             <h5 class="card-title" >{{card.name}}</h5>
           </div>
         </a>
-
+        <a href="{% url 'profile' card.auth_user.id %}">@{{ card.auth_user.username }}</a>
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger" name="delete-from-favorite" value="{{ card.id }}">Usuń z ulubionych</button>
+        </form>
 	</div>
         </div>
     </div>
 	{% empty %}
 	<p>Brak fiszek</p>
 	{% endfor %}
+    {% if SetOfUserCards.has_other_pages %}
+        <nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+    {% if SetOfUserCards.has_previous %}
+      <li class="page-item"><a class="page-link" href="?page={{ SetOfUserCards.previous_page_number }}">Poprzednia</a></li>
+    {% else %}
+      <li class="page-item disabled"><a class="page-link" href="">Poprzednia</a></li>
+    {% endif %}
+    {% for i in SetOfUserCards.paginator.page_range %}
+      {% if SetOfUserCards.number == i %}
+        <li  class="page-item active"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+      {% else %}
+        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if SetOfUserCards.has_next %}
+      <li class="page-item"><a class="page-link" class="page-link" href="?page={{ SetOfUserCards.next_page_number }}">Następna</a></li>
+    {% else %}
+      <li  class="page-item disabled"><a class="page-link" class="page-link" href="">Następna</a></li>
+    {% endif %}
+  </ul>
+        </nav>
+    {% endif %}
 {% endblock %}
