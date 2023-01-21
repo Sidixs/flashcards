@@ -26,7 +26,6 @@ def profile(request, userId):
             response['Location'] += "?page=" + str(page)
             return response
     if userId == request.user.id:
-        # print("tete")
         setOfProfileFlashcardsList = SetOfUserFlashcards.objects.filter(auth_user_id=userId)
     else:
         setOfProfileFlashcardsList = SetOfUserFlashcards.objects.filter(is_private=False).exclude(auth_user_id=request.user.id)
@@ -34,23 +33,17 @@ def profile(request, userId):
             for i in setOfProfileFlashcardsList:
                 i.Favorite = setOfProfileFlashcardsList.filter(userfavorite__auth_user=request.user.id,
                                                        userfavorite__set_of_user_flashcards=i.id).exists()
-        # setOfProfileFlashcardsList = SetOfUserFlashcards.objects.filter(auth_user_id=userId, is_private=False)
     page = request.GET.get('page', 1)
     paginator = Paginator(setOfProfileFlashcardsList, 5)
     try:
         setOfProfileFlashcards = paginator.page(page)
-        # for i in SetOfUserCards:
-        #     i.new = SetOfUserCards.filter(userfavorite__auth_user=request.user.id,
-        #                         userfavorite__set_of_user_flashcards=i.id).exists()
     except PageNotAnInteger:
         setOfProfileFlashcards = paginator.page(1)
     except EmptyPage:
         setOfProfileFlashcards = paginator.page(paginator.num_pages)
-
     try:
         profile = AuthUser.objects.get(id=userId)
     except ObjectDoesNotExist:
         profile = None
     context = {'setOfProfileFlashcards': setOfProfileFlashcards,'profile':profile}
-    # setOfProfileFlashcardsList.auth_user.username
     return render(request, 'profile.html', context)

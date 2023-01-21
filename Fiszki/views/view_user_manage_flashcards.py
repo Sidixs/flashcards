@@ -1,10 +1,18 @@
 from django.shortcuts import redirect, render
+from datetime import datetime
+
+from django.utils import timezone
 
 from Fiszki.forms import SetOfUserFlashcardsForm, UserFlashcardsForm
-from Fiszki.models import UserFlashcards, SetOfUserFlashcards
+from Fiszki.models import UserFlashcards, SetOfUserFlashcards, Ban
 
 
 def setsOfUserFlashcards(request):
+    if request.user.is_authenticated and Ban.objects.filter(auth_user=request.user.id).exists():
+        banTime = Ban.objects.filter(auth_user=request.user.id).values_list('ban_to', flat=True)[0]
+        if banTime > timezone.now():
+            return redirect('ban-info')
+
     if request.method == "POST":
         if 'add-card-set' in request.POST:
             SetOfCardsForm = SetOfUserFlashcardsForm(request.POST)
@@ -26,6 +34,10 @@ def setsOfUserFlashcards(request):
     return render(request, 'user-manage-flashcards.html', {'SetOfCards':SetOfCards,'SetOfCardsForm':SetOfCardsForm})
 
 def userFlashcardDetails(request, SOUFId):
+    if request.user.is_authenticated and Ban.objects.filter(auth_user=request.user.id).exists():
+        banTime = Ban.objects.filter(auth_user=request.user.id).values_list('ban_to', flat=True)[0]
+        if banTime > timezone.now():
+            return redirect('ban-info')
     if request.method == "POST":
         if 'add-card' in request.POST:
             cardForm = UserFlashcardsForm(request.POST)
@@ -57,6 +69,10 @@ def userFlashcardDetails(request, SOUFId):
     return render(request, 'user-manage-flashcard.html', context)
 
 def userFlashcardEdit(request, SOUFId, cardId):
+    if request.user.is_authenticated and Ban.objects.filter(auth_user=request.user.id).exists():
+        banTime = Ban.objects.filter(auth_user=request.user.id).values_list('ban_to', flat=True)[0]
+        if banTime > timezone.now():
+            return redirect('ban-info')
     if request.method == "POST":
         if 'edit-card' in request.POST:
             cardForm = UserFlashcardsForm(request.POST)

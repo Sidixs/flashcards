@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{#/ban-info#}
+{% block title %}Informacja o banie{% endblock %}
+{% block content %}
+    {% if banTime.ban_to != None and banTime.ban_to|date:'U' > now|date:'U' %}
+        Zostałeś zbanowany do: {{ banTime.ban_to |date:"d-m-Y H:i" }}
+        {% else %}
+        Brak uprawnień
+    {% endif %}
+{% endblock %}

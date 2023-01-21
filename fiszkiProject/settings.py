@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'fiszkiProject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'flashcards_pro2',
+        'NAME': 'flashcards_pro3',
         'USER': 'django_user',
         'PASSWORD': 'tFqA99JKszcGjrs',
         'HOST': 'fiszkiprojekt.mysql.database.azure.com',

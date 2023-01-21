@@ -13,6 +13,9 @@ urlpatterns =[
 
     path('user-favorites', views.view_user_favorites.userFavorites, name='user-favorites'),
 
+    path('manage-users', views.view_manage_users.manageUsers, name='manage-users'),
+    path('ban-info', views.view_manage_users.banInfo, name='ban-info'),
+
     path('manage-flashcards', views.view_manage_flashcards.setsOfFlashcards, name='manage-flashcards'),
     path('manage-flashcard/<str:SOFId>', views.view_manage_flashcards.flashcardDetails, name='manage-flashcard'),
     path('manage-flashcard/<str:SOFId>/<str:cardId>', views.view_manage_flashcards.flashcardEdit, name='edit-flashcard'),
