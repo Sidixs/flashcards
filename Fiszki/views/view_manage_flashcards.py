@@ -63,7 +63,7 @@ def flashcardEdit(request, SOFId, cardId):
     cardForm = FlashcardsForm()
     setOfFlashcards = SetOfFlashcards.objects.get(id=SOFId)
     card = Flashcards.objects.filter(id=cardId).first()
-    context = {'setOfFlashcards': setOfFlashcards, 'cardForm': cardForm}
     cardForm.fields['first'].initial = card.first
     cardForm.fields['second'].initial = card.second
+    context = {'setOfFlashcards': setOfFlashcards, 'cardForm': cardForm}
     return render(request, 'edit-flashcard.html', context)

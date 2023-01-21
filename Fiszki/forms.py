@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from django.utils.safestring import mark_safe
 from django import forms
 
-from Fiszki.models import SetOfFlashcards, Flashcards
+from Fiszki.models import SetOfFlashcards, Flashcards, SetOfUserFlashcards, UserFlashcards
 
 
 class RegisterForm(UserCreationForm):
@@ -52,4 +52,15 @@ class SetOfFlashcardsForm(forms.ModelForm):
 class FlashcardsForm(forms.ModelForm):
     class Meta:
         model = Flashcards
+        fields = ['first', 'second']
+
+
+class SetOfUserFlashcardsForm(forms.ModelForm):
+    class Meta:
+        model = SetOfUserFlashcards
+        fields = ['name','is_private']
+
+class UserFlashcardsForm(forms.ModelForm):
+    class Meta:
+        model = UserFlashcards
         fields = ['first', 'second']
