@@ -5,7 +5,7 @@
 {% block title %}Fiszka {{ setOfFlashcards.name }}{% endblock %}
 {% block content %}
 <div class="container mt-auto">
-    {% if user.is_authenticated %}
+    {% if user.is_authenticated and user.id == setOfFlashcards.auth_user.id %}
     <form method="post">
         {% csrf_token %}
         {{setOfFlashcardsForm|crispy}}

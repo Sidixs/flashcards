@@ -9,7 +9,6 @@ def setsOfUserFlashcards(request):
         if 'add-card-set' in request.POST:
             SetOfCardsForm = SetOfUserFlashcardsForm(request.POST)
             if SetOfCardsForm.is_valid():
-                #SetOfCardsForm.auth_user_id = request.user.id
                 Set = SetOfCardsForm.save(commit=False)
                 Set.auth_user_id = request.user.id
                 Set.save()
@@ -17,16 +16,12 @@ def setsOfUserFlashcards(request):
 
         if 'delete-card-set-id' in request.POST:
             cardSetId =request.POST.get("delete-card-set-id")
-            # print(cardSetId)
             cardSet = SetOfUserFlashcards.objects.filter(id = cardSetId).first()
-            # print(cardSet.id)
-            # print(request.user.is_authenticated)
             if cardSet and request.user.is_authenticated and cardSet.auth_user_id == request.user.id:
                 UserFlashcards.objects.filter(set_of_user_flashcards=cardSetId).delete()
                 cardSet.delete()
                 return redirect('user-manage-flashcards')
     SetOfCards = SetOfUserFlashcards.objects.filter(auth_user_id=request.user.id)
-    #print(SetOfCards)
     SetOfCardsForm = SetOfUserFlashcardsForm()
     return render(request, 'user-manage-flashcards.html', {'SetOfCards':SetOfCards,'SetOfCardsForm':SetOfCardsForm})
 

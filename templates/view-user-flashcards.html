@@ -9,6 +9,7 @@
             <a href="{% url 'user-flashcard' card.id %}">
               <div>
                 <h5 class="card-title" >{{card.name}}</h5>
+                    {% if user.is_authenticated %}
                   {% if card.Favorite == True %}
                       <form method="POST">
                     {% csrf_token %}
@@ -20,8 +21,10 @@
                         <button type="submit" class="btn btn-success" name="add-to-favorite" value="{{ card.id }}">Dodaj do ulubionych</button>
                         </form>
                   {% endif %}
+              {% endif %}
               </div>
             </a>
+            <a href="{% url 'profile' card.auth_user.id %}">@{{ card.auth_user.username }}</a>
 	        </div>
 
         </div>

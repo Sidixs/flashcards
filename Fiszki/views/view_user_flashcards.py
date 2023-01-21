@@ -28,19 +28,13 @@ def userFlashcards(request):
             #return redirect('user-flashcards')
 
     SetOfUserCardsList = SetOfUserFlashcards.objects.filter(is_private=False).exclude(auth_user_id=request.user.id)
-    # card = SetOfUserCardsList
     if request.user.is_authenticated:
         for i in SetOfUserCardsList:
             i.Favorite=SetOfUserCardsList.filter(userfavorite__auth_user=request.user.id,userfavorite__set_of_user_flashcards=i.id).exists()
-    # print(SetOfUserCardsList.filter(userfavorite__auth_user=request.user.id))
-    # print(card.values('auth_user__userfavorite__set_of_user_flashcards').count())
     page = request.GET.get('page', 1)
     paginator = Paginator(SetOfUserCardsList, 5)
     try:
         SetOfUserCards = paginator.page(page)
-        # for i in SetOfUserCards:
-        #     i.new = SetOfUserCards.filter(userfavorite__auth_user=request.user.id,
-        #                         userfavorite__set_of_user_flashcards=i.id).exists()
     except PageNotAnInteger:
         SetOfUserCards = paginator.page(1)
     except EmptyPage:
@@ -50,15 +44,12 @@ def userFlashcards(request):
 def userFlashcard(request, SOUFId):
     if request.method == "POST":
         if 'add-to-favorite' in request.POST:
-            # cardForm = UserFlashcardsForm(request.POST)
             newFavorite = UserFavorite(auth_user_id=request.user.id,set_of_user_flashcards_id=SOUFId)
             newFavorite.save()
             page = request.GET.get('page', 1)
-            # print(page)
             response = redirect('user-flashcard', SOUFId=SOUFId)
             response['Location'] += "?page=" + str(page)
             return response
-            # return redirect('user-flashcard', SOUFId=SOUFId,page = page)
         if 'delete-from-favorite' in request.POST:
             UserFavorite.objects.filter(auth_user_id=request.user.id, set_of_user_flashcards_id=SOUFId).delete()
             page = request.GET.get('page', 1)
@@ -68,7 +59,6 @@ def userFlashcard(request, SOUFId):
 
     setOfUserFlashcards = SetOfUserFlashcards.objects.get(id = SOUFId)
     isFavorite = UserFavorite.objects.filter(auth_user_id=request.user.id,set_of_user_flashcards_id=SOUFId).exists()
-    # print(isFavorite)
     flashcards_list = UserFlashcards.objects.filter(set_of_user_flashcards=SOUFId)
     page = request.GET.get('page', 1)
     paginator = Paginator(flashcards_list, 1)
