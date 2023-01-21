@@ -35,6 +35,7 @@
   </ul>
         </nav>
 {% endif %}
+        <a href="{% url 'profile' setOfUserFlashcards.auth_user.id %}">@{{ setOfUserFlashcards.auth_user.username }}</a>
     {% if setOfUserFlashcards.auth_user.id != request.user.id and user.is_authenticated %}
     {% if isFavorite == True %}
         <form method="POST">

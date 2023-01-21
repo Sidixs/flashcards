@@ -1,36 +1,40 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
-from Fiszki.models import SetOfUserFlashcards, AuthUser
+from Fiszki.models import SetOfUserFlashcards, AuthUser, UserFavorite
 
 
 def profile(request, userId):
-    # if request.method == "POST":
-    #     if 'add-card' in request.POST:
-    #         cardForm = UserFlashcardsForm(request.POST)
-    #         if cardForm.is_valid():
-    #             card = cardForm.save(commit=False)
-    #             card.set_of_user_flashcards_id = SOUFId
-    #             card.save()
-    #             return redirect('user-manage-flashcard', SOUFId=SOUFId)
-    #     if 'delete-card-id' in request.POST:
-    #         cardId = request.POST.get('delete-card-id')
-    #         card = UserFlashcards.objects.filter(id = cardId).first()
-    #         if card and request.user.is_authenticated:
-    #             card.delete()
-    #             return redirect('user-manage-flashcard', SOUFId=SOUFId)
-    #     if 'edit-card-set-name' in request.POST:
-    #         cardSetForm = SetOfUserFlashcardsForm(request.POST)
-    #         if cardSetForm.is_valid() and request.user.is_authenticated:
-    #             SetOfUserFlashcards.objects.filter(id=SOUFId).update(name=cardSetForm.cleaned_data['name'])
-    #             SetOfUserFlashcards.objects.filter(id=SOUFId).update(is_private=cardSetForm.cleaned_data['is_private'])
-    #             return redirect('user-manage-flashcard', SOUFId=SOUFId)
+    if request.method == "POST":
+        if 'delete-from-favorite' in request.POST:
+            favId = request.POST.get('delete-from-favorite')
+            favCard = UserFavorite.objects.filter(set_of_user_flashcards_id=favId, auth_user_id=request.user.id).first()
+            if favCard and request.user.is_authenticated:
+                favCard.delete()
+                page = request.GET.get('page', 1)
+                response = redirect('profile', userId)
+                response['Location'] += "?page=" + str(page)
+                return response
+                # return redirect('user-flashcards')
+        if 'add-to-favorite' in request.POST:
+            favId = request.POST.get('add-to-favorite')
+            newFavorite = UserFavorite(auth_user_id=request.user.id, set_of_user_flashcards_id=favId, )
+            newFavorite.save()
+            page = request.GET.get('page', 1)
+            response = redirect('profile', userId)
+            response['Location'] += "?page=" + str(page)
+            return response
     if userId == request.user.id:
         # print("tete")
         setOfProfileFlashcardsList = SetOfUserFlashcards.objects.filter(auth_user_id=userId)
     else:
-        setOfProfileFlashcardsList = SetOfUserFlashcards.objects.filter(auth_user_id=userId, is_private=False)
+        setOfProfileFlashcardsList = SetOfUserFlashcards.objects.filter(is_private=False).exclude(auth_user_id=request.user.id)
+        if request.user.is_authenticated:
+            for i in setOfProfileFlashcardsList:
+                i.Favorite = setOfProfileFlashcardsList.filter(userfavorite__auth_user=request.user.id,
+                                                       userfavorite__set_of_user_flashcards=i.id).exists()
+        # setOfProfileFlashcardsList = SetOfUserFlashcards.objects.filter(auth_user_id=userId, is_private=False)
     page = request.GET.get('page', 1)
     paginator = Paginator(setOfProfileFlashcardsList, 5)
     try:

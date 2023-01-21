@@ -17,6 +17,9 @@ urlpatterns =[
     path('manage-flashcard/<str:SOFId>', views.view_manage_flashcards.flashcardDetails, name='manage-flashcard'),
     path('manage-flashcard/<str:SOFId>/<str:cardId>', views.view_manage_flashcards.flashcardEdit, name='edit-flashcard'),
 
+    path('manage-user-flashcards', views.view_manage_user_flashcards.manageUserFlashcards, name='manage-user-flashcards'),
+    path('manage-user-flashcards/<str:SOUFId>', views.view_manage_user_flashcards.manageUserFlashcardDetails, name='manage-user-flashcard-details'),
+
     path('user-manage-flashcards', views.view_user_manage_flashcards.setsOfUserFlashcards, name='user-manage-flashcards'),
     path('user-manage-flashcard/<str:SOUFId>', views.view_user_manage_flashcards.userFlashcardDetails, name='user-manage-flashcard'),
     path('user-manage-flashcard/<str:SOUFId>/<str:cardId>', views.view_user_manage_flashcards.userFlashcardEdit, name='user-edit-flashcard'),

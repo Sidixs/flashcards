@@ -24,6 +24,19 @@
                           Fiszka prywatna
                           {% endif %}
                   {% endif %}
+              {% if user.is_authenticated and profile.id != request.user.id %}
+                  {% if card.Favorite == True %}
+                      <form method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger" name="delete-from-favorite" value="{{ card.id }}">Usuń z ulubionych</button>
+                    </form>
+                  {% else %}
+                        <form method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-success" name="add-to-favorite" value="{{ card.id }}">Dodaj do ulubionych</button>
+                        </form>
+                  {% endif %}
+              {% endif %}
               </div>
             </a>
 	        </div>
