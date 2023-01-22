@@ -9,13 +9,16 @@
     {% else %}
 <div class="container mt-auto">
 	{% for flashcard in flashcards %}
-	<div class="card mt-2">
-		<div class="card-header d-flex flex-row justify-content-between">
-{#            Tutaj fajnie jakby była animacja obracania, tak aby druga strona była widoczna p kliknięciu#}
-            <div>{{ flashcard.first }}</div>
-            <div>{{ flashcard.second }}</div>
-        </div>
-	</div>
+{#	<div class="card mt-2">#}
+{#		<div class="card-header d-flex flex-row justify-content-between">#}
+            <div class="scene scene--card mt-auto">
+                <div class="card">
+                    <div class="card__face card__face--front">{{ flashcard.first }}</div>
+                    <div class="card__face card__face--back">{{ flashcard.second }}</div>
+                      </div>
+                </div>
+{#        </div>#}
+{#	</div>#}
 
 	{% empty %}
 	<p>Pusto</p>
@@ -54,4 +57,11 @@
     {% endif %}
      </div>
         </center>
+    <script>var cards = document.querySelectorAll('.card');
+
+[...cards].forEach((card)=>{
+  card.addEventListener( 'click', function() {
+    card.classList.toggle('is-flipped');
+  });
+});</script>
 {% endblock %}
