@@ -495,7 +495,7 @@ class SetOfFlashcards(models.Model):
 class SetOfUserFlashcards(models.Model):
     auth_user = models.ForeignKey(AuthUser, models.DO_NOTHING)
     name = models.CharField(max_length=100)
-    is_private = models.IntegerField()
+    is_private = models.BooleanField()
 
     class Meta:
         managed = False
