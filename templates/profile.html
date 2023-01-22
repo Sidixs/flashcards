@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
 {#/profile/<str:userId>#}
 {% block title %}
-     <center>
-    <div style="width: 36rem";>
     {% if profile != None %}
         Profil {{ profile.username }}
     {% else %}
@@ -10,6 +8,8 @@
     {% endif %}
 {% endblock %}
 {% block content %}
+    <center>
+    <div style="width: 36rem";>
     {% if profile != None %}
     <div>
         Profil użytkownika <strong>{{ profile.username }}</strong>
