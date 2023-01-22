@@ -24,9 +24,11 @@ SECRET_KEY = 'django-insecure-4^eq@w=jc@@bv8kb*gt9i1mqsl2c22f(*9*luj$+oz71m1ru@a
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 ALLOWED_HOSTS = []
 
+#DEBUG = False
+#ALLOWED_HOSTS = ['flashcards-ST-pro.azurewebsites.net']
+#CSRF_TRUSTED_ORIGINS = ['https://flashcards-ST-pro.azurewebsites.net']
 
 # Application definition
 
@@ -83,7 +85,7 @@ WSGI_APPLICATION = 'fiszkiProject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'flashcards_pro3',
+        'NAME': 'flashcards_pro4',
         'USER': 'django_user',
         'PASSWORD': 'tFqA99JKszcGjrs',
         'HOST': 'fiszkiprojekt.mysql.database.azure.com',
