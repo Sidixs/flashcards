@@ -60,4 +60,4 @@ jobs:
         with:
           app-name: 'flashcards-ST-pro'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_2B3B798E9A664B018C15C82D0F2C44FE }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_332EF11F6AD14489A8A76B68BEF85A52 }}
