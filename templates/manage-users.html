@@ -16,13 +16,13 @@
               <h5 class="card-title" >{{normalUser.username}}</h5>
               </a>
               <h6>{{ normalUser.email }}</h6>
-              <h6>Ostatnio zalogowany: {{ normalUser.last_login }}</h6>
-              <h6>Data rejestracji: {{ normalUser.date_joined }}</h6>
+              <h6>Ostatnio zalogowany: {{ normalUser.last_login|date:"d-m-Y H:i" }}</h6>
+              <h6>Data rejestracji: {{ normalUser.date_joined|date:"d-m-Y H:i" }}</h6>
               {% if normalUser.banList.ban__ban_to != None and normalUser.banList.ban__ban_to|date:'U' > now|date:'U' %}
                   {% if normalUser.banList.ban__ban_to|date:"d-m-Y H:i" == '31-12-2099 00:00' %}
                     Zbanowany pernamentnie
                   {% else %}
-                Zbanowany do: {{ normalUser.banList.ban__ban_to |date:"d-m-Y H:i" }}
+                Zbanowany do: {{ normalUser.banList.ban__ban_to|date:"d-m-Y H:i" }}
                       {% endif %}
               {% endif %}
             <form method="POST" onsubmit="return confirm('Czy na pewno?')">
