@@ -7,12 +7,9 @@ conan==1.50.0
 crispy-bootstrap5==0.6
 Django==4.0.4
 django-annoying==0.10.6
-django-ckeditor==6.4.2
 django-colorfield==0.7.0
 django-crispy-forms==1.14.0
-django-extensions==3.1.5
-django-js-asset==2.0.0
-django-pyodbc-azure==2.1.0.0
+django-pyodbc-azure
 docopt==0.6.2
 fasteners==0.17.3
 graphviz==0.20
