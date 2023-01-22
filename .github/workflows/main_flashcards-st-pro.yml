@@ -28,7 +28,7 @@ jobs:
           source venv/bin/activate
       
       - name: apt
-        run: apt-get install python3-dev default-libmysqlclient-dev build-essential
+        run: sudo apt-get install python3-dev default-libmysqlclient-dev build-essential
       
       - name: Install dependencies
         run: pip install -r requirements.txt
