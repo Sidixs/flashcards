@@ -2,6 +2,8 @@
 {#/flashcard/<str:SOFId>#}
 {% block title %}Fiszka {{ setOfFlashcards.name }}{% endblock %}
 {% block content %}
+    <center>
+    <div style="width: 36rem";>
 <div class="container mx-auto">
 	{% for flashcard in flashcards %}
 	<div class="card mt-3">
@@ -31,4 +33,6 @@
   </ul>
         </nav>
 {% endif %}
+    </div>
+    </center>
 {% endblock %}

@@ -4,6 +4,8 @@
 {% load crispy_forms_filters %}
 {% block title %}Strona Główna{% endblock %}
 {% block content %}
+    <center>
+    <div style="width: 36rem";>
     {% if user.is_superuser %}
     <form method="post">
         {% csrf_token %}
@@ -57,4 +59,6 @@
     {% else %}
     Brak uprawnień
     {% endif %}
+    </div>
+    </center>
 {% endblock %}

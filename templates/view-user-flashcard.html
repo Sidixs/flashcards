@@ -2,6 +2,8 @@
 {#/user-flashcard/<str:SOUFId>#}
 {% block title %}Fiszka {{ setOfUserFlashcards.name }}{% endblock %}
 {% block content %}
+    <center>
+    <div style="width: 36rem";>
     {% if setOfUserFlashcards.is_private == True and user.id != setOfUserFlashcards.auth_user.id %}
     Brak dostępu
     {% else %}
@@ -50,4 +52,6 @@
     {% endif %}
     {% endif %}
     {% endif %}
+     </div>
+        </center>
 {% endblock %}
