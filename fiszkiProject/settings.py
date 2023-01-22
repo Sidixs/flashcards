@@ -27,8 +27,8 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 #DEBUG = False
-#ALLOWED_HOSTS = ['mojblog.azurewebsites.net']
-#CSRF_TRUSTED_ORIGINS = ['https://mojblog.azurewebsites.net']
+#ALLOWED_HOSTS = ['flashcards-ST-pro.azurewebsites.net']
+#CSRF_TRUSTED_ORIGINS = ['https://flashcards-ST-pro.azurewebsites.net']
 
 # Application definition
 
