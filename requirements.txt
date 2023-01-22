@@ -1,6 +1,4 @@
+mysqlclient
 Django
 django-crispy-forms
 crispy-bootstrap5
-mysql-connector-python
-protobuf
-mysqlclient==2.1.0
