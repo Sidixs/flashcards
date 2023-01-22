@@ -2,9 +2,9 @@
 {#/flashcard/<str:SOFId>#}
 {% block title %}Fiszka {{ setOfFlashcards.name }}{% endblock %}
 {% block content %}
-<div class="container mt-auto">
+<div class="container mx-auto">
 	{% for flashcard in flashcards %}
-	<div class="card mt-2">
+	<div class="card mt-3">
 		<div class="card-header d-flex flex-row justify-content-between">
 {#            Tutaj fajnie jakby była animacja obracania, tak aby druga strona była widoczna p kliknięciu#}
             <div>{{ flashcard.first }}</div>
