@@ -23,7 +23,6 @@ patch-ng==1.17.4
 Pillow==9.1.1
 pipreqs==0.4.11
 pluginbase==1.0.1
-psycopg2
 pydot==1.4.2
 pydotplus==2.0.2
 Pygments==2.12.0
