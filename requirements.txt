@@ -1,3 +1,4 @@
+cmake
 django-colorfield==0.7.0
 asgiref==3.5.1
 certifi==2022.5.18.1
