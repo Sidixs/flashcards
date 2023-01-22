@@ -29,6 +29,9 @@ jobs:
       
       - name: apt
         run: sudo apt-get install python3-dev default-libmysqlclient-dev build-essential
+        
+      - name: wheel
+        run: pip install wheel
       
       - name: Install dependencies
         run: pip install -r requirements.txt
