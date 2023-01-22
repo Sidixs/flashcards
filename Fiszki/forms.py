@@ -75,3 +75,7 @@ class UserFlashcardsForm(forms.ModelForm):
     class Meta:
         model = UserFlashcards
         fields = ['first', 'second']
+        labels = {
+            'first': 'Pierwsza strona karty:',
+            'second': 'Druga strona karty'
+        }
