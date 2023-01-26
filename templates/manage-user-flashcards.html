@@ -4,6 +4,8 @@
 {% load crispy_forms_filters %}
 {% block title %}Strona Główna{% endblock %}
 {% block content %}
+    <center>
+    <div style="width: 50%";>
     {% if user.is_superuser %}
     {% for card in SetOfCards %}
 	<div class="card mt-2">
@@ -51,4 +53,6 @@
     {% else %}
     Brak uprawnień
     {% endif %}
+    </div>
+    </center>
 {% endblock %}

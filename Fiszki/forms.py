@@ -48,19 +48,34 @@ class SetOfFlashcardsForm(forms.ModelForm):
     class Meta:
         model = SetOfFlashcards
         fields = ['name']
+        labels = {
+            'name': 'Nazwa fiszki:'
+        }
 
 class FlashcardsForm(forms.ModelForm):
     class Meta:
         model = Flashcards
         fields = ['first', 'second']
+        labels = {
+            'first': 'Pierwsza strona karty:',
+            'second': 'Druga strona karty'
+        }
 
 
 class SetOfUserFlashcardsForm(forms.ModelForm):
     class Meta:
         model = SetOfUserFlashcards
         fields = ['name','is_private']
+        labels = {
+            'name' : 'Nazwa fiszki:',
+            'is_private' : 'Ustaw fiszkę jako prywatną'
+        }
 
 class UserFlashcardsForm(forms.ModelForm):
     class Meta:
         model = UserFlashcards
         fields = ['first', 'second']
+        labels = {
+            'first': 'Pierwsza strona karty:',
+            'second': 'Druga strona karty'
+        }

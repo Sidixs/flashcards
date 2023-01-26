@@ -8,9 +8,11 @@
     {% endif %}
 {% endblock %}
 {% block content %}
+    <center>
+    <div style="width: 36rem";>
     {% if profile != None %}
     <div>
-        Profil użytkownika {{ profile.username }}
+        Profil użytkownika <strong>{{ profile.username }}</strong>
     </div>
     {% for card in setOfProfileFlashcards %}
 	<div class="card mt-2">
@@ -73,4 +75,6 @@
     {% else %}
         Taki profil nie istnieje
     {% endif %}
+    </div>
+    </center>
 {% endblock %}

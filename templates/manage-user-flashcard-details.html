@@ -4,6 +4,8 @@
 {% load crispy_forms_filters %}
 {% block title %}Fiszka {{ setOfFlashcards.name }}{% endblock %}
 {% block content %}
+    <center>
+    <div style="width: 50%";>
 <div class="container mt-auto">
     {% if user.is_superuser %}
         Fiszka: {{ setOfFlashcards.name }}
@@ -31,4 +33,6 @@
     Brak uprawnień
     {% endif %}
 </div>
+    </div>
+    </center>
 {% endblock %}

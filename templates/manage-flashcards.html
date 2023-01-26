@@ -4,6 +4,8 @@
 {% load crispy_forms_filters %}
 {% block title %}Strona Główna{% endblock %}
 {% block content %}
+    <center>
+    <div style="width: 50%";>
     {% if user.is_superuser %}
     <form method="post">
         {% csrf_token %}
@@ -55,6 +57,8 @@
         </nav>
     {% endif %}
     {% else %}
-    Brak uprawnień
+        <p style="margin-top: 300px">Brak uprawnień</p>
     {% endif %}
+    </div>
+    </center>
 {% endblock %}

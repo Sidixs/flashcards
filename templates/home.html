@@ -3,8 +3,10 @@
 {% block title %}Strona Główna{% endblock %}
 {% block content %}
     {% for card in SetOfCards %}
-	<div class="card mx-auto text-center col-sm-3">
-		<div class="card-body d-flex flex-row justify-content-between">
+        <center>
+        <div style="width: 36rem";>
+	<div class="card mt-3">
+		<div class="card-body d-flex flex-row justify-content-between text-center">
 			<div class="post-preview-container">
         <a href="{% url 'flashcard' card.id %}">
           <div>
@@ -15,6 +17,8 @@
 	</div>
         </div>
     </div>
+        </div>
+        </center>
 	{% empty %}
 	<p>Brak fiszek</p>
 	{% endfor %}

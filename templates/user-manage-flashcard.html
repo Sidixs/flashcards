@@ -5,6 +5,8 @@
 {% block title %}Fiszka {{ setOfFlashcards.name }}{% endblock %}
 {% block content %}
 <div class="container mt-auto">
+<center>
+    <div style="width: 50%";>
     {% if user.is_authenticated and user.id == setOfFlashcards.auth_user.id %}
     <form method="post">
         {% csrf_token %}
@@ -39,5 +41,8 @@
         {% else %}
     Brak uprawnień
     {% endif %}
+</div>
+
+    </center>
 </div>
 {% endblock %}
